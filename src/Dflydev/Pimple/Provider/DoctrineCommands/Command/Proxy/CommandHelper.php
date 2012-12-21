@@ -13,7 +13,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Dflydev\Silex\Provider\DoctrineCommands\Command\Proxy;
+namespace Dflydev\Pimple\Provider\DoctrineCommands\Command\Proxy;
 
 use Doctrine\DBAL\Tools\Console\Helper\ConnectionHelper;
 use Doctrine\ORM\Tools\Console\Helper\EntityManagerHelper;
@@ -35,12 +35,12 @@ abstract class CommandHelper
      */
     static public function setApplicationEntityManager($application, $emName)
     {
-        $app = $application->getSilexApplication();
+        $c = $application->getContainer();
 
         if ($emName) {
-            $em = $app['orm.ems'][$emName];
+            $em = $c['orm.ems'][$emName];
         } else {
-            $em = $app['orm.em'];
+            $em = $c['orm.em'];
         }
 
         $helperSet = $application->getHelperSet();
@@ -56,16 +56,15 @@ abstract class CommandHelper
      */
     static public function setApplicationConnection($application, $connName)
     {
-        $app = $application->getSilexApplication();
+        $c = $application->getContainer();
 
         if ($emName) {
-            $em = $app['orm.ems'][$emName];
+            $em = $c['orm.ems'][$emName];
         } else {
-            $em = $app['orm.em'];
+            $em = $c['orm.em'];
         }
 
         $helperSet = $application->getHelperSet();
-        $helperSet = $app['console.helper_set'];
         $helperSet->set(new ConnectionHelper($connection), 'db');
     }
 }

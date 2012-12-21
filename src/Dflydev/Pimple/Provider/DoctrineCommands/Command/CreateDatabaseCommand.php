@@ -13,7 +13,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Dflydev\Silex\Provider\DoctrineCommands\Command;
+namespace Dflydev\Pimple\Provider\DoctrineCommands\Command;
 
 use Doctrine\DBAL\DriverManager;
 use Symfony\Component\Console\Input\InputInterface;

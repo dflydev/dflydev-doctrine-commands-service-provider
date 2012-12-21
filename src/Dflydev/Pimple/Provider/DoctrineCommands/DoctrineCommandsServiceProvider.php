@@ -9,37 +9,36 @@
  * file that was distributed with this source code.
  */
 
-namespace Dflydev\Silex\Provider\DoctrineCommands;
+namespace Dflydev\Pimple\Provider\DoctrineCommands;
 
-use Silex\Application;
-use Silex\ServiceProviderInterface;
+use Pimple;
 
 /**
  * Doctrine Commands Service Provider
  *
  * @author Beau Simensen <beau@dflydev.com>
  */
-class DoctrineCommandsServiceProvider implements ServiceProviderInterface
+class DoctrineCommandsServiceProvider
 {
     /**
      * {@inheritdoc}
      */
-    public function boot(Application $app)
+    public function register(Pimple $c)
     {
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function register(Application $app)
-    {
-        $app['console'] = $app->share($app->extend('console', function($console, $app) {
+        $c['console'] = $c->share($c->extend('console', function($console, $c) {
             foreach (array(
                 new Command\CreateDatabaseCommand,
                 new Command\DropDatabaseCommand,
-                new Command\Proxy\UpdateSchemaCommand,
             ) as $command) {
                 $console->add($command);
+            }
+
+            if (class_exists('Doctrine\ORM\Tools\Console\Command\SchemaTool\UpdateCommand')) {
+                foreach (array(
+                    new Command\Proxy\UpdateSchemaCommand,
+                ) as $command) {
+                    $console->add($command);
+                }
             }
 
             return $console;

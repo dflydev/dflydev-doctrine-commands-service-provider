@@ -13,7 +13,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Dflydev\Silex\Provider\DoctrineCommands\Command\Proxy;
+namespace Dflydev\Pimple\Provider\DoctrineCommands\Command\Proxy;
 
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputInterface;

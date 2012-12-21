@@ -13,9 +13,8 @@
  * file that was distributed with this source code.
  */
 
-namespace Dflydev\Silex\Provider\DoctrineCommands\Command;
+namespace Dflydev\Pimple\Provider\DoctrineCommands\Command;
 
-use Silex\Application;
 use Symfony\Component\Console\Command\Command as BaseCommand;
 
 /**
@@ -26,6 +25,8 @@ use Symfony\Component\Console\Command\Command as BaseCommand;
  */
 abstract class Command extends BaseCommand
 {
+    protected $app;
+
     /**
      * Get a Doctrine Entity Manager by name.
      *
@@ -35,13 +36,13 @@ abstract class Command extends BaseCommand
      */
     protected function getEntityManager($name = null)
     {
-        $app = $this->getApplication()->getSilexApplication();
+        $c = $this->getApplication()->getContainer();
 
         if (null === $name) {
-            return $app['orm.em'];
+            return $c['orm.em'];
         }
 
-        return $app['orm.ems'][$name];
+        return $c['orm.ems'][$name];
     }
 
     /**
@@ -53,12 +54,12 @@ abstract class Command extends BaseCommand
      */
     protected function getDoctrineConnection($name = null)
     {
-        $app = $this->getApplication()->getSilexApplication();
+        $c = $this->getApplication()->getContainer();
 
         if (null === $name) {
-            return $app['db'];
+            return $c['db'];
         }
 
-        return $app['dbs'][$name];
+        return $c['dbs'][$name];
     }
 }
